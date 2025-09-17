@@ -13,7 +13,7 @@ const Dashboard = () => {
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-8">
         <div className="flex flex-col">
           <Link href="/">
-            <h1 className="text-4xl font-extrabold bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent mb-4 sm:mb-0">
+            <h1 className="text-4xl font-extrabold text-black bg-clip-text mb-4 sm:mb-0">
               DashBoard
             </h1>
           </Link>
