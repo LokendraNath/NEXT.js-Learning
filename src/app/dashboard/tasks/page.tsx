@@ -34,7 +34,7 @@ const Tasks = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 p-8">
       <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-sm p-8">
-        <h1 className="text-3xl font-bold bg-gradient-to-r from-violet-600 to-indigo-600 bg-clip-text text-transparent mb-8">
+        <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-700 to-blue-800 bg-clip-text text-transparent mb-8 text-center">
           Tasks
         </h1>
 
