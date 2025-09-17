@@ -1,4 +1,5 @@
 import {
+  ChartColumn,
   LayoutDashboardIcon,
   PanelTopIcon,
   PaperclipIcon,
@@ -53,7 +54,7 @@ const Dashboard = () => {
                 Analytics
               </h2>
               <span className="text-green-500 text-2xl">
-                <LayoutDashboardIcon />
+                <ChartColumn />
               </span>
             </div>
             <p className="text-stone-600 mt-5">
