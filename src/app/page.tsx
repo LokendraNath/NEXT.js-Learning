@@ -13,7 +13,7 @@ const Home = () => {
     >
       <div className="text-center">
         <h1 className="text-5xl font-bold text-blue-800 mb-6">
-          Welcome To Dashboard App 🙏🙏
+          Welcome To Dashboard App 📊
         </h1>
         <p className="text-lg text-gray-600 mb-10">
           Manage your tasks, track analytics, and stay organized with our

@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "LyticsBoard",
+  title: "Dashboard App",
   description: "Lokendra's First Next.js Project",
 };
 
@@ -26,6 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-gray-100`}
+        suppressHydrationWarning={true}
       >
         {children}
       </body>
