@@ -1,4 +1,4 @@
-import { series } from "@/data/series";
+import { series } from "@/_Projects/Series App/data/series";
 import { Calendar, PenLine, StarIcon, Video } from "lucide-react";
 const MainSeriesPage = ({ params }: { params: { slug: string[] } }) => {
   const { slug } = params;

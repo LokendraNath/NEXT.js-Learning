@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { series } from "@/data/series";
+import { series } from "@/_Projects/Series App/data/series";
 import Link from "next/link";
 
 const SeriesPage = () => {
