@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { series } from "@/_Projects/Series App/data/series";
 import { Calendar, PenLine, StarIcon, Video } from "lucide-react";
 const MainSeriesPage = ({ params }: { params: { slug: string[] } }) => {
