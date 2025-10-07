@@ -1,4 +1,8 @@
 const page = () => {
-  return <div>page</div>;
+  return (
+    <div className="">
+      <h1 className="text-2xl">Next Js Auth</h1>
+    </div>
+  );
 };
 export default page;
