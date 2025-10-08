@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Josefin_Sans } from "next/font/google";
 import "./globals.css";
+import ToasterProvider from "@/components/ToasterProvider";
 
 const josefinSans = Josefin_Sans({
   subsets: ["latin"],
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body
         className={`${josefinSans.className} antialiased bg-black text-white`}
       >
+        <ToasterProvider />
         {children}
       </body>
     </html>
