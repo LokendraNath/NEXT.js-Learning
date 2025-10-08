@@ -1,6 +1,7 @@
 "use client";
 
 import axios from "axios";
+import { Loader } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -34,12 +35,19 @@ const SignupPage = () => {
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", user);
-      router.push("/login");
-      toast.success("SignUp Successfully");
+      toast.success(response.data.message || "SignUp Successfully");
       console.log("Signup Success", response.data);
-    } catch (error) {
-      toast.error("Something Went Wrong");
-      console.log("Error in Signup", error);
+      router.push("/login");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      if (err.response && err.response?.data?.error) {
+        toast.error(
+          err.response?.data?.error || "Email Already Exits, Please Login"
+        );
+        console.log(err.response?.data?.error);
+      } else {
+        toast.error("Something went wrong!");
+      }
     } finally {
       setLoading(false);
     }
@@ -88,22 +96,26 @@ const SignupPage = () => {
           <p
             className={`${
               isbuttonDisabled
-                ? "block text-center text-red-600 text-sm tracking-wider mt-8"
+                ? "block text-center text-red-600 text-sm tracking-wider mt-3"
                 : "hidden"
             }`}
           >
             Please Enter All Feilds
           </p>
           <button
-            className={`w-full  pt-[10px] pb-[9px] rounded-lg text-xl font-bold ${
+            className={`w-full mt-5  pt-[10px] pb-[9px] rounded-lg text-xl font-bold flex items-center justify-center ${
               loading
-                ? "bg-gray-800 text-gray-600 mt-3"
-                : "bg-white text-black mt-8 cursor-pointer"
+                ? "bg-gray-800 text-gray-600"
+                : "bg-white text-black cursor-pointer"
             }`}
             disabled={loading || isbuttonDisabled}
             onClick={onSignUp}
           >
-            Sign Up
+            {loading ? (
+              <Loader className="size-5 animate-spin text-white" />
+            ) : (
+              "SignUp"
+            )}
           </button>
           <p className="mt-5 text-center text-stone-400">
             Already Have Account?{" "}

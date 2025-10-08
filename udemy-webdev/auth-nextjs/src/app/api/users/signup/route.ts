@@ -10,14 +10,11 @@ export const POST = async (request: NextRequest) => {
     const reqBody = await request.json();
     const { fullName, email, password } = reqBody;
 
-    console.log(reqBody);
-
     // Check if User Already Exists
     const user = await User.findOne({ email });
-
     if (user) {
       return NextResponse.json(
-        { error: "User Already Exits" },
+        { error: "Email Already Exits, Please Login" },
         { status: 400 }
       );
     }
@@ -34,8 +31,17 @@ export const POST = async (request: NextRequest) => {
     });
     const savedUser = await newUser.save();
 
+    // Safe Response
     return NextResponse.json(
-      { message: "User Create Succussfully", success: true, savedUser },
+      {
+        message: "SignUp Successfully",
+        success: true,
+        user: {
+          _id: savedUser._id,
+          fullName: savedUser.fullName,
+          email: savedUser.email,
+        },
+      },
       { status: 201 }
     );
   } catch (error) {
