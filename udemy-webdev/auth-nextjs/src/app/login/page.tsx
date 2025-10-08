@@ -1,18 +1,48 @@
 "use client";
 
 import axios from "axios";
+import { Loader } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
+  const router = useRouter();
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
 
-  const handleSubmit = async () => {
-    console.log("Signup Click");
+  const [isbuttonDisabled, setIsButtonDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (user.email.length > 0 && user.password.length > 0) {
+      setIsButtonDisabled(false);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }, [user]);
+
+  const onLogin = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.post("/api/users/login", user);
+      if (response.data.success) {
+        toast.success(response.data.message);
+        router.push("/profile");
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      if (err.response) {
+        toast.error(err.response?.data?.error || "Login Failed");
+      } else {
+        toast.error("Something went wrong!, Please Try Again Later");
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -24,7 +54,7 @@ const LoginPage = () => {
             Please Fill the Information below
           </p>
         </div>
-        <form onSubmit={handleSubmit}>
+        <div>
           <div className="mb-3">
             <input
               type="email"
@@ -46,8 +76,16 @@ const LoginPage = () => {
             />
           </div>
 
-          <button className="mt-8 w-full bg-white text-black pt-[10px] pb-[9px] rounded-lg text-xl font-bold">
-            Login
+          <button
+            className={`w-full mt-8  pt-[10px] pb-[9px] rounded-lg text-xl font-bold flex items-center justify-center ${
+              isbuttonDisabled
+                ? "bg-gray-800 text-gray-600"
+                : "bg-white text-black cursor-pointer"
+            }`}
+            disabled={loading || isbuttonDisabled}
+            onClick={onLogin}
+          >
+            {loading ? <Loader className="size-7 animate-spin" /> : "Login"}
           </button>
           <p className="mt-5 text-center text-stone-400">
             Not Have Account?{" "}
@@ -55,7 +93,7 @@ const LoginPage = () => {
               SignUp
             </Link>
           </p>
-        </form>
+        </div>
       </div>
     </div>
   );
