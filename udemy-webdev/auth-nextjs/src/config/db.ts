@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { NextResponse } from "next/server";
 
 export const connectDB = async () => {
   try {
@@ -16,7 +17,9 @@ export const connectDB = async () => {
       );
       process.exit();
     });
-  } catch (error) {
-    console.log("Something Went Wrong", error);
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 400 });
   }
 };
