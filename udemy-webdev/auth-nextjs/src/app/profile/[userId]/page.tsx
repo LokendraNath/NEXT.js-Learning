@@ -4,8 +4,7 @@ import User from "@/modals/usersModal";
 const UserProfilePage = async ({ params }: { params: { userId: string } }) => {
   await connectDB();
 
-  const { userId } = params;
-
+  const { userId } = await params;
   const user = await User.findById(userId).select("-password");
 
   if (!user)

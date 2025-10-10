@@ -1,25 +1,20 @@
 import mongoose from "mongoose";
 import { NextResponse } from "next/server";
+const MONGO_URI = process.env.MONGO_URI!;
+
+let isConnected = false;
 
 export const connectDB = async () => {
+  if (isConnected) {
+    return;
+  }
+
   try {
-    await mongoose.connect(process.env.MONGO_URI!);
-    const connection = mongoose.connection;
-
-    connection.on("connected", () => {
-      console.log("MongoDB Connected Successfully");
-    });
-
-    connection.on("error", (err) => {
-      console.log(
-        "MongoDB connection error, Make Sure MongoDB is Running",
-        err
-      );
-      process.exit();
-    });
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 400 });
+    await mongoose.connect(MONGO_URI);
+    isConnected = true;
+    console.log("✅ MongoDB Connected Successfully");
+  } catch (error) {
+    console.error("MongoDB Connection Failed", error);
+    throw new Error("MongoDB Connection Error");
   }
 };

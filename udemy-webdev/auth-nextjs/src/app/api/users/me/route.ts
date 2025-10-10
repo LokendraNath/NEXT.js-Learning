@@ -3,9 +3,8 @@ import { getDataFromToken } from "@/helpers/getDataFromToken";
 import User from "@/modals/usersModal";
 import { NextRequest, NextResponse } from "next/server";
 
-connectDB();
-
 export async function GET(request: NextRequest) {
+  await connectDB();
   try {
     const userId = await getDataFromToken(request);
     const matchUser = await User.findById(userId).select("-password");

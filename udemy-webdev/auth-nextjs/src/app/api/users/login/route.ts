@@ -4,9 +4,8 @@ import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 
-connectDB();
-
 export const POST = async (request: NextRequest) => {
+  await connectDB();
   try {
     const reqBody = await request.json();
     const { email, password } = reqBody;
@@ -16,7 +15,7 @@ export const POST = async (request: NextRequest) => {
     if (!user) {
       return NextResponse.json(
         { error: "User Does Not Exits" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -48,7 +47,7 @@ export const POST = async (request: NextRequest) => {
   } catch (error) {
     return NextResponse.json(
       { error: (error as Error).message },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
