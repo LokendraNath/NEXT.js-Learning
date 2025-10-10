@@ -1,12 +1,12 @@
 import { connectDB } from "@/config/db";
+import { sendEmail } from "@/helpers/mailer";
 import User from "@/modals/usersModal.js";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 import validator from "validator";
 
-connectDB();
-
 export const POST = async (request: NextRequest) => {
+  await connectDB();
   try {
     const reqBody = await request.json();
     const { fullName, email, password } = reqBody;
@@ -14,7 +14,7 @@ export const POST = async (request: NextRequest) => {
     if (!validator.isEmail(email)) {
       return NextResponse.json(
         { error: "Invalid email format" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -29,7 +29,7 @@ export const POST = async (request: NextRequest) => {
     ) {
       return NextResponse.json(
         { error: "Password must be stronger" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -38,7 +38,7 @@ export const POST = async (request: NextRequest) => {
     if (user) {
       return NextResponse.json(
         { error: "Email Already Exits, Please Login" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -54,6 +54,9 @@ export const POST = async (request: NextRequest) => {
     });
     const savedUser = await newUser.save();
 
+    // Email Verification
+    await sendEmail({ email, emailType: "VERIFY", userId: savedUser._id });
+
     // Safe Response
     return NextResponse.json(
       {
@@ -65,7 +68,7 @@ export const POST = async (request: NextRequest) => {
           email: savedUser.email,
         },
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });

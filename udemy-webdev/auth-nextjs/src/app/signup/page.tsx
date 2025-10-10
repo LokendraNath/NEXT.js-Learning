@@ -37,7 +37,7 @@ const SignupPage = () => {
       const response = await axios.post("/api/users/signup", user);
       toast.success(response.data.message || "SignUp Successfully");
       console.log("Signup Success", response.data);
-      router.push("/login");
+      router.push(`/check-email?email=${encodeURIComponent(user.email)}`);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       if (err.response && err.response?.data?.error) {
