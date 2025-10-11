@@ -34,10 +34,10 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
       from: "nathdeveloper25@gmail.com",
       to: email,
       subject:
-        emailType === "VERIFY" ? "Verify your account" : "Reset your password",
+        emailType === "VERIFY" ? "Verify your account" : "Reset Your password",
       html: `<p>Click <a href="${
         process.env.DOMAIN
-      }/verifyemail?token=${hasedToken}">Here</a> To ${
+      }/${emailType === "VERIFY" ? "verify-email" : "update-password"}?token=${hasedToken}">Here</a> To ${
         emailType === "VERIFY" ? "Verify Your Email" : "Reset Your Email"
       }</p>`,
     };
@@ -45,6 +45,6 @@ export const sendEmail = async ({ email, emailType, userId }: any) => {
     const mailResponse = await transport.sendMail(mailOption);
     return mailResponse;
   } catch (error: any) {
-    throw new Error(error.message);
+    throw new Error(error.response.data.message);
   }
 };
