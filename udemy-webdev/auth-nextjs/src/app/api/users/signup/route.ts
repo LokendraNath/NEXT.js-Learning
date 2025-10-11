@@ -3,35 +3,12 @@ import { sendEmail } from "@/helpers/mailer";
 import User from "@/modals/usersModal.js";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
-import validator from "validator";
 
 export const POST = async (request: NextRequest) => {
   await connectDB();
   try {
     const reqBody = await request.json();
     const { fullName, email, password } = reqBody;
-
-    if (!validator.isEmail(email)) {
-      return NextResponse.json(
-        { error: "Invalid email format" },
-        { status: 400 },
-      );
-    }
-
-    if (
-      !validator.isStrongPassword(password, {
-        minLength: 8,
-        minLowercase: 1,
-        minUppercase: 1,
-        minNumbers: 1,
-        minSymbols: 1,
-      })
-    ) {
-      return NextResponse.json(
-        { error: "Password must be stronger" },
-        { status: 400 },
-      );
-    }
 
     // Check if User Already Exists
     const user = await User.findOne({ email });
