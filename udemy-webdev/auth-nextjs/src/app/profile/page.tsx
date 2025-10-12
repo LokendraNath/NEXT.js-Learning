@@ -1,8 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { Loader } from "lucide-react";
-import Link from "next/link";
+import { Loader, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -17,8 +16,10 @@ const ProfilePage = () => {
   const router = useRouter();
   const [userData, setUserData] = useState<null | UserData>(null);
   const [loading, setLoading] = useState(true);
+  const [logoutLoading, setLogoutLoading] = useState(false);
 
   const handleLogout = async () => {
+    setLogoutLoading(true);
     try {
       const response = await axios.get("/api/users/logout");
       toast.success(response.data.message);
@@ -26,6 +27,8 @@ const ProfilePage = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       toast.error(error?.response?.data?.message || "Logout Failed");
+    } finally {
+      setLogoutLoading(false);
     }
   };
 
@@ -49,22 +52,22 @@ const ProfilePage = () => {
   if (loading)
     return (
       <div className="flex min-h-screen items-center justify-center">
-        <Loader className="ml-3 size-10 animate-spin" />
+        <Loader2 className="ml-3 size-10 animate-spin" />
       </div>
     );
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
-      <h1 className="mb-5 text-5xl">Profile Page</h1>
+      <h1 className="mb-5 text-4xl">Profile Page</h1>
 
       {userData ? (
-        <Link
-          href={`/profile/${userData._id}`}
-          className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border p-2"
+        <button
+          onClick={() => router.push(`/profile/${userData._id}`)}
+          className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border px-10 py-5"
         >
-          <h1 className="test-2xl">Welcome {userData.fullName} 👋</h1>
-          <h3 className="text-xl font-bold">{userData.email}</h3>
-        </Link>
+          <h1 className="text-4xl">Welcome, {userData.fullName} 👋</h1>
+          <h3 className="text-lg font-bold">{userData.email}</h3>
+        </button>
       ) : (
         <h1 className="my-5 flex items-center text-center text-xl font-bold text-red-600">
           Nothing
@@ -72,9 +75,9 @@ const ProfilePage = () => {
       )}
       <button
         onClick={handleLogout}
-        className="mt-5 cursor-pointer rounded-lg bg-red-500 p-2 text-lg hover:bg-red-800"
+        className="mt-5 flex cursor-pointer rounded-lg bg-red-500 p-2 text-lg hover:bg-red-800"
       >
-        LogOut
+        {logoutLoading ? <Loader className="size-7 animate-spin" /> : "LogOut"}
       </button>
     </div>
   );

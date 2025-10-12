@@ -32,7 +32,7 @@ const LoginPage = () => {
       const response = await axios.post("/api/users/login", user);
       if (response.data.success) {
         toast.success(response.data.message);
-        router.push("/profile");
+        router.push("/");
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
@@ -68,7 +68,7 @@ const LoginPage = () => {
           </div>
           <div className="relative mb-3">
             <input
-              type="password"
+              type={isPassVisible ? "text" : "password"}
               id="password"
               placeholder="Password"
               value={user.password}

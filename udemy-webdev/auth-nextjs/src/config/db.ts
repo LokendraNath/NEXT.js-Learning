@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { NextResponse } from "next/server";
 const MONGO_URI = process.env.MONGO_URI!;
 
 let isConnected = false;
