@@ -1,13 +1,16 @@
 "use client";
-export const dynamic = "force-dynamic";
 
 import { ArrowUpRight, Mail } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function CheckEmailPage() {
-  const searchParams = useSearchParams();
-  const email = searchParams.get("email");
+  const [email, setEmail] = useState<string | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setEmail(params.get("email"));
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">

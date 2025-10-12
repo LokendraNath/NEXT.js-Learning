@@ -4,15 +4,13 @@ export const dynamic = "force-dynamic";
 import axios from "axios";
 import { Eye, EyeClosedIcon, KeyRoundIcon, Loader } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function UpdatePasswordPage() {
-  const searchParams = useSearchParams();
+  const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
-  const token = searchParams.get("token");
 
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmNewPassword] = useState("");
@@ -21,6 +19,12 @@ export default function UpdatePasswordPage() {
   const [isNewPassVisible, setIsPassVisible] = useState(false);
   const [isCnfrmPassVisible, setIsConfirmPassVisible] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  // 🔧 Runtime-only param extraction
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setToken(params.get("token"));
+  }, []);
 
   async function handleSubmit() {
     if (newPassword !== confirmPassword) {

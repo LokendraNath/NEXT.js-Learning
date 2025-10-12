@@ -3,16 +3,13 @@ export const dynamic = "force-dynamic";
 import axios, { AxiosError } from "axios";
 import { Loader2, MailCheckIcon, MailXIcon } from "lucide-react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export default function VerifyEmailPage() {
-  const searchParams = useSearchParams();
+  const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
-
-  const [token, setToken] = useState("");
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -47,14 +44,15 @@ export default function VerifyEmailPage() {
 
   // Read token from URL once
   useEffect(() => {
-    const urlToken = searchParams.get("token");
+    const params = new URLSearchParams(window.location.search);
+    const urlToken = params.get("token");
     if (!urlToken) {
       setMessage("Verification token not found in the URL.");
       setStatus("error");
       return;
     }
     setToken(urlToken);
-  }, [searchParams]);
+  }, []);
 
   useEffect(() => {
     if (token) verifyUserEmail();
