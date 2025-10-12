@@ -66,7 +66,10 @@ const ProfilePage = () => {
           className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border px-10 py-5"
         >
           <h1 className="text-4xl">Welcome, {userData.fullName} 👋</h1>
-          <h3 className="text-lg font-bold">{userData.email}</h3>
+          <h3 className="text-xl font-bold">{userData.email}</h3>
+          <p className="mt-3 text-sm text-green-500">
+            Note: Click Here For View User Profile
+          </p>
         </button>
       ) : (
         <h1 className="my-5 flex items-center text-center text-xl font-bold text-red-600">
