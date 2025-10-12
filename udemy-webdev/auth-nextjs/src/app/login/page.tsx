@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { Loader } from "lucide-react";
+import { Eye, EyeClosedIcon, Loader } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -16,6 +16,7 @@ const LoginPage = () => {
 
   const [isbuttonDisabled, setIsButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isPassVisible, setIsPassVisible] = useState(false);
 
   useEffect(() => {
     if (user.email.length > 0 && user.password.length > 0) {
@@ -65,7 +66,7 @@ const LoginPage = () => {
               className="w-full border-b p-2 text-lg outline-none"
             />
           </div>
-          <div className="mb-3">
+          <div className="relative mb-3">
             <input
               type="password"
               id="password"
@@ -74,6 +75,18 @@ const LoginPage = () => {
               onChange={(e) => setUser({ ...user, password: e.target.value })}
               className="w-full border-b p-2 text-lg outline-none"
             />
+            {user.password.length > 0 && (
+              <button
+                className="absolute top-3 right-3"
+                onClick={() => setIsPassVisible((prev) => !prev)}
+              >
+                {isPassVisible ? (
+                  <EyeClosedIcon className="size-5 cursor-pointer" />
+                ) : (
+                  <Eye className="size-5 cursor-pointer" />
+                )}
+              </button>
+            )}
           </div>
 
           <button

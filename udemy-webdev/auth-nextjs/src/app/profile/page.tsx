@@ -48,36 +48,33 @@ const ProfilePage = () => {
 
   if (loading)
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <Loader className="ml-3 size-10 animate-spin" />
       </div>
     );
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
-      <h1 className="text-2xl mb-5">Profile Page</h1>
+    <div className="flex min-h-screen flex-col items-center justify-center">
+      <h1 className="mb-5 text-5xl">Profile Page</h1>
 
       {userData ? (
         <Link
           href={`/profile/${userData._id}`}
-          className="border p-2 flex flex-col items-center justify-center cursor-pointer"
+          className="flex cursor-pointer flex-col items-center justify-center rounded-2xl border p-2"
         >
-          <h1 className="text-2xl font-bold">Email: {userData.email}</h1>
-          <h3 className="test-xl">FullName: {userData.fullName}</h3>
+          <h1 className="test-2xl">Welcome {userData.fullName} 👋</h1>
+          <h3 className="text-xl font-bold">{userData.email}</h3>
         </Link>
       ) : (
-        <h1 className="text-center text-xl font-bold text-red-600 flex items-center my-5">
+        <h1 className="my-5 flex items-center text-center text-xl font-bold text-red-600">
           Nothing
         </h1>
       )}
       <button
         onClick={handleLogout}
-        className="p-2 bg-red-500 text-lg rounded-lg mt-5 cursor-pointer hover:bg-red-800"
+        className="mt-5 cursor-pointer rounded-lg bg-red-500 p-2 text-lg hover:bg-red-800"
       >
         LogOut
-      </button>
-      <button className="p-2 bg-red-500 text-lg rounded-lg mt-5 cursor-pointer hover:bg-red-800">
-        Get User Data
       </button>
     </div>
   );
