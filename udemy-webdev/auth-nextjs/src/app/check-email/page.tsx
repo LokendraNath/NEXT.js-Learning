@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 
 import { ArrowUpRight, Mail } from "lucide-react";
 import Link from "next/link";
