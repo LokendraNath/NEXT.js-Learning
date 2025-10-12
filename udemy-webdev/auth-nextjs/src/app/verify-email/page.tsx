@@ -1,4 +1,5 @@
 "use client";
+export const dynamic = "force-dynamic";
 import axios, { AxiosError } from "axios";
 import { Loader2, MailCheckIcon, MailXIcon } from "lucide-react";
 import Link from "next/link";
