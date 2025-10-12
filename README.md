@@ -8,7 +8,8 @@
 
 ## Live demo
 
-**Live:** next-auth-mongo-lokendra.vercel.app
+**Live:** [View Project](next-auth-mongo-lokendra.vercel.app)
+
 
 ---
 
